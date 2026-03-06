@@ -1,0 +1,738 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#c8102e">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="Funaro">
+<meta name="description" content="Funaro & Co. — Certified Public Accountants. U.S. and International Tax, Audit, and Consulting.">
+<link rel="manifest" href="manifest.json">
+<title>Funaro & Co.</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --red: #c8102e;
+    --red-light: #e03050;
+    --navy: #1a2340;
+    --bg: #ffffff;
+    --surface: #f4f4f4;
+    --border: rgba(200,16,46,0.12);
+    --muted: #5a6275;
+    --text: #1a2340;
+    --safe-bottom: env(safe-area-inset-bottom, 0px);
+    --nav-height: 64px;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'Montserrat', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    overflow-x: hidden;
+    padding-bottom: calc(var(--nav-height) + var(--safe-bottom));
+  }
+
+  /* ── TOP HEADER ── */
+  .top-bar {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 200;
+    height: 56px;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 1.2rem;
+    background: rgba(255,255,255,0.96);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+    box-shadow: 0 1px 12px rgba(0,0,0,0.06);
+  }
+  .top-bar-logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.4rem; font-weight: 600; color: var(--red);
+    text-decoration: none;
+  }
+  .top-bar-tagline {
+    font-size: 0.58rem; letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  /* ── BOTTOM NAV ── */
+  .bottom-nav {
+    position: fixed; bottom: 0; left: 0; right: 0; z-index: 200;
+    height: calc(var(--nav-height) + var(--safe-bottom));
+    padding-bottom: var(--safe-bottom);
+    background: rgba(255,255,255,0.97);
+    backdrop-filter: blur(16px);
+    border-top: 1px solid var(--border);
+    display: flex; align-items: stretch;
+    box-shadow: 0 -4px 20px rgba(0,0,0,0.07);
+  }
+  .nav-item {
+    flex: 1; display: flex; flex-direction: column;
+    align-items: center; justify-content: center; gap: 4px;
+    cursor: pointer; border: none; background: none;
+    padding: 0 4px;
+    transition: background 0.15s;
+    -webkit-appearance: none;
+  }
+  .nav-item:active { background: rgba(200,16,46,0.05); }
+  .nav-icon { font-size: 1.3rem; line-height: 1; }
+  .nav-label {
+    font-size: 0.55rem; letter-spacing: 0.08em; text-transform: uppercase;
+    color: var(--muted); font-weight: 500; transition: color 0.2s;
+  }
+  .nav-item.active .nav-label { color: var(--red); }
+  .nav-item.active .nav-icon { filter: none; }
+  .nav-dot {
+    width: 4px; height: 4px; border-radius: 50%;
+    background: var(--red); opacity: 0;
+    transition: opacity 0.2s;
+  }
+  .nav-item.active .nav-dot { opacity: 1; }
+
+  /* ── PAGES ── */
+  main { padding-top: 56px; }
+  .page { display: none; min-height: calc(100vh - 56px); }
+  .page.active { display: block; animation: pageIn 0.25s ease; }
+  @keyframes pageIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+
+  /* ── HERO PAGE ── */
+  .hero {
+    min-height: calc(100vh - 56px);
+    display: flex; flex-direction: column; justify-content: flex-end;
+    padding: 2rem 1.5rem 3rem;
+    background: linear-gradient(160deg, #fff 0%, #fff5f6 100%);
+    position: relative; overflow: hidden;
+  }
+  .hero::before {
+    content: '1947';
+    position: absolute; right: -1rem; bottom: 4rem;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 7rem; font-weight: 300;
+    color: rgba(200,16,46,0.06); pointer-events: none;
+    letter-spacing: -0.05em;
+  }
+  .hero-tag {
+    font-size: 0.6rem; letter-spacing: 0.25em; text-transform: uppercase;
+    color: var(--red); margin-bottom: 1rem;
+  }
+  .hero-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2.8rem, 10vw, 4rem);
+    font-weight: 300; line-height: 1.05;
+    margin-bottom: 1.2rem;
+  }
+  .hero-title em { font-style: italic; color: var(--red-light); }
+  .hero-subtitle {
+    font-size: 0.78rem; line-height: 1.8; color: var(--muted);
+    margin-bottom: 2rem; font-weight: 300;
+  }
+  .hero-btn {
+    display: inline-block; padding: 1rem 2rem;
+    background: var(--red); color: #fff;
+    font-size: 0.65rem; letter-spacing: 0.2em; text-transform: uppercase;
+    font-weight: 600; border: none; cursor: pointer;
+    text-decoration: none; border-radius: 2px;
+    transition: background 0.2s;
+  }
+  .hero-btn:active { background: var(--red-light); }
+  .hero-badges {
+    display: flex; gap: 0.8rem; margin-top: 2rem; flex-wrap: wrap;
+  }
+  .badge {
+    font-size: 0.6rem; letter-spacing: 0.1em; text-transform: uppercase;
+    color: var(--red); border: 1px solid var(--border);
+    padding: 0.3rem 0.7rem; border-radius: 20px;
+  }
+
+  /* ── SECTION SHELL ── */
+  .page-header {
+    padding: 2rem 1.5rem 1.2rem;
+    border-bottom: 1px solid rgba(200,16,46,0.08);
+  }
+  .page-label {
+    font-size: 0.58rem; letter-spacing: 0.25em; text-transform: uppercase;
+    color: var(--red); margin-bottom: 0.4rem;
+  }
+  .page-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.9rem; font-weight: 300; line-height: 1.1;
+  }
+  .page-title em { font-style: italic; color: var(--red-light); }
+
+  /* ── ABOUT ── */
+  .about-body { padding: 1.5rem; display: flex; flex-direction: column; gap: 1.2rem; }
+  .about-intro {
+    font-size: 0.82rem; line-height: 1.85; color: var(--muted); font-weight: 300;
+  }
+  .stats-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin: 0.5rem 0;
+  }
+  .stat-box {
+    background: var(--surface); border-left: 3px solid var(--red);
+    padding: 1rem 1rem 1rem 1.2rem;
+  }
+  .stat-box .num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2.2rem; font-weight: 300; color: var(--red); line-height: 1;
+  }
+  .stat-box .lbl {
+    font-size: 0.6rem; letter-spacing: 0.1em; text-transform: uppercase;
+    color: var(--muted); margin-top: 0.2rem;
+  }
+  .about-card {
+    background: #fff; border: 1px solid var(--border);
+    border-radius: 4px; padding: 1.2rem;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+  }
+  .about-card-icon { font-size: 1.3rem; margin-bottom: 0.5rem; }
+  .about-card h3 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.15rem; margin-bottom: 0.4rem;
+  }
+  .about-card p { font-size: 0.73rem; color: var(--muted); line-height: 1.7; }
+
+  /* ── SERVICES ── */
+  .services-list { padding: 1rem 1.5rem; display: flex; flex-direction: column; gap: 1px; }
+  .service-item {
+    background: #fff; border: 1px solid var(--border);
+    border-radius: 4px; padding: 1.4rem 1.2rem;
+    display: flex; gap: 1rem; align-items: flex-start;
+    margin-bottom: 0.8rem;
+    box-shadow: 0 1px 6px rgba(0,0,0,0.03);
+    cursor: pointer; transition: box-shadow 0.2s, transform 0.2s;
+  }
+  .service-item:active { transform: scale(0.99); box-shadow: 0 4px 16px rgba(200,16,46,0.1); }
+  .service-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2rem; font-weight: 300; color: rgba(200,16,46,0.2);
+    line-height: 1; min-width: 2.5rem;
+  }
+  .service-content h3 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.2rem; font-weight: 400; margin-bottom: 0.4rem;
+  }
+  .service-content p { font-size: 0.72rem; color: var(--muted); line-height: 1.7; }
+
+  /* ── OFFICES ── */
+  .offices-list { padding: 1rem 1.5rem; display: flex; flex-direction: column; gap: 0.8rem; }
+  .office-item {
+    background: #fff; border: 1px solid var(--border);
+    border-radius: 4px; padding: 1.2rem;
+    display: flex; gap: 1rem; align-items: flex-start;
+    box-shadow: 0 1px 6px rgba(0,0,0,0.03);
+  }
+  .office-flag-big { font-size: 2rem; line-height: 1; }
+  .office-city {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.4rem; font-weight: 300;
+  }
+  .office-country {
+    font-size: 0.6rem; letter-spacing: 0.15em; text-transform: uppercase;
+    color: var(--red); margin-bottom: 0.4rem;
+  }
+  .office-info { font-size: 0.72rem; color: var(--muted); line-height: 1.7; }
+  .office-phone-link {
+    display: inline-block; margin-top: 0.5rem;
+    font-size: 0.72rem; color: var(--red);
+    text-decoration: none; font-weight: 500;
+  }
+
+  /* ── PUBLICATIONS ── */
+  .pub-list { padding: 0.5rem 1.5rem 1.5rem; }
+  .pub-item {
+    padding: 1.2rem 0;
+    border-bottom: 1px solid rgba(26,35,64,0.07);
+    display: flex; gap: 1rem; align-items: flex-start; cursor: pointer;
+  }
+  .pub-date-col {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 0.85rem; color: var(--red); min-width: 52px; text-align: center;
+    line-height: 1.3;
+  }
+  .pub-date-col span { display: block; font-size: 1.3rem; }
+  .pub-title-text {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.05rem; font-weight: 400; line-height: 1.4; margin-bottom: 0.25rem;
+  }
+  .pub-source-text {
+    font-size: 0.6rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted);
+  }
+
+  /* ── ALERTS ── */
+  .alerts-list { padding: 1rem 1.5rem; display: flex; flex-direction: column; gap: 0.9rem; }
+  .alert-item {
+    background: #fff; border-left: 3px solid var(--red);
+    border-radius: 0 4px 4px 0; padding: 1.2rem;
+    box-shadow: 0 1px 6px rgba(0,0,0,0.04);
+  }
+  .alert-tag {
+    display: inline-block; margin-bottom: 0.5rem;
+    font-size: 0.58rem; letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--red); background: rgba(200,16,46,0.08); padding: 0.2rem 0.5rem;
+    border-radius: 2px;
+  }
+  .alert-item h3 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.1rem; margin-bottom: 0.4rem; line-height: 1.4;
+  }
+  .alert-item p { font-size: 0.72rem; color: var(--muted); line-height: 1.7; }
+
+  /* ── CONTACT ── */
+  .contact-body { padding: 1.5rem; }
+  .contact-details { margin-bottom: 2rem; }
+  .contact-row {
+    display: flex; align-items: center; gap: 0.8rem;
+    padding: 0.9rem 0; border-bottom: 1px solid rgba(26,35,64,0.07);
+  }
+  .contact-row-icon { font-size: 1.1rem; }
+  .contact-row-label {
+    font-size: 0.58rem; letter-spacing: 0.15em; text-transform: uppercase;
+    color: var(--red); display: block;
+  }
+  .contact-row-value { font-size: 0.78rem; color: var(--text); font-weight: 400; }
+  .contact-row a { color: var(--red); text-decoration: none; }
+  .form-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.5rem; margin-bottom: 1.5rem; font-weight: 300;
+  }
+  .form-group { margin-bottom: 1.4rem; }
+  .form-group label {
+    display: block; font-size: 0.6rem; letter-spacing: 0.18em; text-transform: uppercase;
+    color: var(--muted); margin-bottom: 0.4rem;
+  }
+  .form-group input,
+  .form-group textarea,
+  .form-group select {
+    width: 100%; background: transparent;
+    border: none; border-bottom: 1px solid rgba(26,35,64,0.2);
+    padding: 0.7rem 0; color: var(--text);
+    font-family: 'Montserrat', sans-serif; font-size: 0.85rem;
+    font-weight: 300; outline: none; border-radius: 0;
+    -webkit-appearance: none; appearance: none;
+    transition: border-color 0.2s;
+  }
+  .form-group input:focus,
+  .form-group textarea:focus,
+  .form-group select:focus { border-bottom-color: var(--red); }
+  .form-group textarea { resize: none; height: 80px; }
+  .form-group select option { background: #fff; }
+  .submit-btn {
+    width: 100%; padding: 1rem;
+    background: var(--red); color: #fff;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.7rem; letter-spacing: 0.2em; text-transform: uppercase;
+    font-weight: 600; border: none; cursor: pointer; border-radius: 2px;
+    transition: background 0.2s;
+  }
+  .submit-btn:active { background: var(--red-light); }
+
+  /* ── INSTALL BANNER ── */
+  .install-banner {
+    display: none;
+    position: fixed; bottom: calc(var(--nav-height) + var(--safe-bottom) + 12px);
+    left: 1rem; right: 1rem; z-index: 300;
+    background: var(--navy); color: #fff;
+    border-radius: 8px; padding: 1rem 1.2rem;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.2);
+    flex-direction: column; gap: 0.8rem;
+  }
+  .install-banner.show { display: flex; }
+  .install-banner p { font-size: 0.78rem; line-height: 1.5; }
+  .install-banner p strong { color: #fff; }
+  .install-banner p span { color: rgba(255,255,255,0.6); }
+  .install-actions { display: flex; gap: 0.8rem; }
+  .install-btn {
+    flex: 1; padding: 0.7rem;
+    background: var(--red); color: #fff; border: none;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.65rem; letter-spacing: 0.15em; text-transform: uppercase;
+    font-weight: 600; cursor: pointer; border-radius: 4px;
+  }
+  .install-dismiss {
+    padding: 0.7rem 1rem; background: rgba(255,255,255,0.1); color: #fff;
+    border: none; font-family: 'Montserrat', sans-serif;
+    font-size: 0.65rem; cursor: pointer; border-radius: 4px;
+  }
+
+  /* ── SCROLLBAR ── */
+  ::-webkit-scrollbar { width: 3px; }
+  ::-webkit-scrollbar-track { background: transparent; }
+  ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
+</style>
+</head>
+<body>
+
+<!-- TOP BAR -->
+<div class="top-bar">
+  <a class="top-bar-logo" onclick="showPage('home')">Funaro & Co.</a>
+  <span class="top-bar-tagline">Est. 1947 · New York</span>
+</div>
+
+<!-- MAIN CONTENT -->
+<main>
+
+  <!-- HOME -->
+  <div class="page active" id="page-home">
+    <div class="hero">
+      <p class="hero-tag">Certified Public Accountants · Est. 1947</p>
+      <h1 class="hero-title">Where <em>expertise</em> meets international perspective</h1>
+      <p class="hero-subtitle">U.S. and international accounting, tax advisory, auditing, and management consulting across six global offices.</p>
+      <a class="hero-btn" onclick="showPage('services')">Explore Services</a>
+      <div class="hero-badges">
+        <span class="badge">New York</span>
+        <span class="badge">Miami</span>
+        <span class="badge">Milan</span>
+        <span class="badge">Rome</span>
+        <span class="badge">Frankfurt</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ABOUT -->
+  <div class="page" id="page-about">
+    <div class="page-header">
+      <p class="page-label">About Us</p>
+      <h2 class="page-title">A legacy of <em>trust</em></h2>
+    </div>
+    <div class="about-body">
+      <p class="about-intro">Founded in 1947, Funaro & Co. has grown steadily alongside our clients. We provide a wide range of services for both U.S. and international clients — combining deep local knowledge with true global reach.</p>
+      <div class="stats-grid">
+        <div class="stat-box"><div class="num">75+</div><div class="lbl">Years in Practice</div></div>
+        <div class="stat-box"><div class="num">6</div><div class="lbl">Global Offices</div></div>
+        <div class="stat-box"><div class="num">4</div><div class="lbl">Practice Areas</div></div>
+        <div class="stat-box"><div class="num">GGI</div><div class="lbl">Firm of the Year</div></div>
+      </div>
+      <div class="about-card">
+        <div class="about-card-icon">🏛️</div>
+        <h3>Deep Expertise</h3>
+        <p>Our team includes professionals with deep expertise in U.S. and international tax law, audit standards, and cross-border transactions.</p>
+      </div>
+      <div class="about-card">
+        <div class="about-card-icon">🌍</div>
+        <h3>Global Network</h3>
+        <p>As members of GGI Global Alliance AG, we provide seamless access to professional services across more than 125 countries worldwide.</p>
+      </div>
+      <div class="about-card">
+        <div class="about-card-icon">🤝</div>
+        <h3>Client-First</h3>
+        <p>Our success is measured by our clients' success. We provide tailored, results-oriented solutions for every organization we serve.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- SERVICES -->
+  <div class="page" id="page-services">
+    <div class="page-header">
+      <p class="page-label">What We Do</p>
+      <h2 class="page-title">Our <em>practice</em> areas</h2>
+    </div>
+    <div class="services-list">
+      <div class="service-item">
+        <div class="service-num">01</div>
+        <div class="service-content">
+          <h3>Auditing & Assurance</h3>
+          <p>Audits and reviews of U.S. GAAP and IFRS financial statements, statutory audits, internal control systems, employee benefit plan audits, forensic procedures, and due diligence for M&A transactions.</p>
+        </div>
+      </div>
+      <div class="service-item">
+        <div class="service-num">02</div>
+        <div class="service-content">
+          <h3>Tax</h3>
+          <p>Comprehensive international and domestic tax services — from individual and corporate returns to multistate planning, tax examinations, and representation before federal, state, and local authorities.</p>
+        </div>
+      </div>
+      <div class="service-item">
+        <div class="service-num">03</div>
+        <div class="service-content">
+          <h3>Transfer Pricing</h3>
+          <p>Expert analysis, documentation, and planning for intercompany transactions — ensuring compliance with U.S. and international transfer pricing regulations.</p>
+        </div>
+      </div>
+      <div class="service-item">
+        <div class="service-num">04</div>
+        <div class="service-content">
+          <h3>Management Consulting</h3>
+          <p>Strategic advisory and outsourcing services across finance, operations, and technology — helping organizations optimize processes and achieve measurable results.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- OFFICES -->
+  <div class="page" id="page-offices">
+    <div class="page-header">
+      <p class="page-label">Where We Are</p>
+      <h2 class="page-title">Six offices,<br>one <em>team</em></h2>
+    </div>
+    <div class="offices-list">
+      <div class="office-item">
+        <div class="office-flag-big">🗽</div>
+        <div>
+          <div class="office-city">New York</div>
+          <div class="office-country">United States</div>
+          <div class="office-info">Empire State Building<br>350 Fifth Avenue, 41st Floor</div>
+          <a class="office-phone-link" href="tel:+12129473333">+1 (212) 947-3333</a>
+        </div>
+      </div>
+      <div class="office-item">
+        <div class="office-flag-big">🌴</div>
+        <div>
+          <div class="office-city">Miami</div>
+          <div class="office-country">United States</div>
+          <div class="office-info">1221 Brickell Avenue</div>
+          <a class="office-phone-link" href="tel:+13057127133">+1 (305) 712-7133</a>
+        </div>
+      </div>
+      <div class="office-item">
+        <div class="office-flag-big">🇮🇹</div>
+        <div>
+          <div class="office-city">Milan</div>
+          <div class="office-country">Italy</div>
+          <div class="office-info">Piazza Vetra, 17</div>
+          <a class="office-phone-link" href="tel:+390230555200">+39 (02) 30.55.52.00</a>
+        </div>
+      </div>
+      <div class="office-item">
+        <div class="office-flag-big">🏛️</div>
+        <div>
+          <div class="office-city">Rome</div>
+          <div class="office-country">Italy</div>
+          <div class="office-info">Via Po, 102</div>
+          <a class="office-phone-link" href="tel:+390694443811">+39 (06) 94.44.38.11</a>
+        </div>
+      </div>
+      <div class="office-item">
+        <div class="office-flag-big">☀️</div>
+        <div>
+          <div class="office-city">Bari</div>
+          <div class="office-country">Italy</div>
+          <div class="office-info">Via Putignani, 12/A</div>
+          <a class="office-phone-link" href="tel:+390809198510">+39 (080) 91.98.510</a>
+        </div>
+      </div>
+      <div class="office-item">
+        <div class="office-flag-big">🇩🇪</div>
+        <div>
+          <div class="office-city">Frankfurt</div>
+          <div class="office-country">Germany</div>
+          <div class="office-info">Burgfriedenstraße 8-10<br>60489 Frankfurt am Main</div>
+          <a class="office-phone-link" href="tel:+4962518262961">+49 6251 8262961</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PUBLICATIONS & ALERTS -->
+  <div class="page" id="page-news">
+    <div class="page-header">
+      <p class="page-label">Knowledge & Alerts</p>
+      <h2 class="page-title">Stay <em>informed</em></h2>
+    </div>
+
+    <!-- Tab switcher -->
+    <div style="display:flex; border-bottom: 1px solid rgba(200,16,46,0.1); margin: 0 1.5rem;">
+      <button class="tab-btn active" onclick="switchTab('publications', this)" style="flex:1; padding:0.9rem 0; font-family:'Montserrat',sans-serif; font-size:0.65rem; letter-spacing:0.15em; text-transform:uppercase; background:none; border:none; border-bottom: 2px solid #c8102e; color:var(--red); cursor:pointer; font-weight:600;">Publications</button>
+      <button class="tab-btn" onclick="switchTab('alerts', this)" style="flex:1; padding:0.9rem 0; font-family:'Montserrat',sans-serif; font-size:0.65rem; letter-spacing:0.15em; text-transform:uppercase; background:none; border:none; border-bottom: 2px solid transparent; color:var(--muted); cursor:pointer; font-weight:500;">Alerts</button>
+    </div>
+
+    <div id="tab-publications" class="pub-list">
+      <div class="pub-item">
+        <div class="pub-date-col"><span>Feb</span>2026</div>
+        <div><div class="pub-title-text">Bonus depreciation permanente al 100%: regole, opzioni e strategie</div><div class="pub-source-text">IPSOA / Wolters Kluwer</div></div>
+      </div>
+      <div class="pub-item">
+        <div class="pub-date-col"><span>Feb</span>2026</div>
+        <div><div class="pub-title-text">MASTER Stati Uniti d'America: diritto e fiscalità d'impresa II Edizione</div><div class="pub-source-text">IPSOA / Wolters Kluwer</div></div>
+      </div>
+      <div class="pub-item">
+        <div class="pub-date-col"><span>Dec</span>2025</div>
+        <div><div class="pub-title-text">Export verso gli USA: economic nexus e obblighi fiscali per le imprese</div><div class="pub-source-text">IPSOA / Wolters Kluwer</div></div>
+      </div>
+      <div class="pub-item">
+        <div class="pub-date-col"><span>Oct</span>2025</div>
+        <div><div class="pub-title-text">Transfer pricing: i principi fissati dalla U.S. Tax Court</div><div class="pub-source-text">IPSOA / Wolters Kluwer</div></div>
+      </div>
+      <div class="pub-item">
+        <div class="pub-date-col"><span>Nov</span>2019</div>
+        <div><div class="pub-title-text">Funaro & Co., P.C. Named GGI Member Firm of the Year 2019</div><div class="pub-source-text">GGI Global Alliance AG</div></div>
+      </div>
+      <div class="pub-item">
+        <div class="pub-date-col"><span>Jun</span>2020</div>
+        <div><div class="pub-title-text">An Alternative to Sales Tax Registrations</div><div class="pub-source-text">GGI Global Alliance AG</div></div>
+      </div>
+    </div>
+
+    <div id="tab-alerts" class="alerts-list" style="display:none;">
+      <div class="alert-item"><div class="alert-tag">Latest</div><h3>The "One Big Beautiful Bill" is Signed into Law — Section 899 Not Included</h3><p>The bill has been enacted, with the notable exclusion of Section 899. Our team has analyzed the implications for domestic and international clients.</p></div>
+      <div class="alert-item"><div class="alert-tag">Legislative</div><h3>U.S. House Passes the "One Big Beautiful Bill Act"</h3><p>The House of Representatives has passed this significant tax legislation. Key provisions affecting corporate and individual taxpayers are now moving forward.</p></div>
+      <div class="alert-item"><div class="alert-tag">Compliance</div><h3>Corporate Transparency Act — Implementation Fast Approaching</h3><p>Entities subject to the CTA must file beneficial ownership information reports. Deadlines are imminent — ensure your organization is fully compliant.</p></div>
+      <div class="alert-item"><div class="alert-tag">International</div><h3>Tax Reporting Rules for Controlled Foreign Corporations</h3><p>Updated guidance on CFC reporting obligations. U.S. shareholders of foreign corporations should review their reporting requirements carefully.</p></div>
+      <div class="alert-item"><div class="alert-tag">Tax Law</div><h3>Inflation Reduction Act — Key Tax Provisions</h3><p>Analysis of energy-related credits, corporate minimum tax, and other provisions affecting businesses and individuals under the IRA.</p></div>
+      <div class="alert-item"><div class="alert-tag">Relief</div><h3>CARES Act Paycheck Protection Program</h3><p>A comprehensive overview of PPP eligibility, loan forgiveness conditions, and interaction with other relief measures for businesses affected by COVID-19.</p></div>
+    </div>
+  </div>
+
+  <!-- CONTACT -->
+  <div class="page" id="page-contact">
+    <div class="page-header">
+      <p class="page-label">Get in Touch</p>
+      <h2 class="page-title">Let's start a <em>conversation</em></h2>
+    </div>
+    <div class="contact-body">
+      <div class="contact-details">
+        <div class="contact-row">
+          <div class="contact-row-icon">📍</div>
+          <div><span class="contact-row-label">Address</span><span class="contact-row-value">Empire State Building, 350 Fifth Ave, 41st Fl, NY</span></div>
+        </div>
+        <div class="contact-row">
+          <div class="contact-row-icon">📞</div>
+          <div><span class="contact-row-label">Phone</span><a class="contact-row-value" href="tel:+12129473333">+1 (212) 947-3333</a></div>
+        </div>
+        <div class="contact-row">
+          <div class="contact-row-icon">✉️</div>
+          <div><span class="contact-row-label">Email</span><a class="contact-row-value" href="mailto:info@funaro.com">info@funaro.com</a></div>
+        </div>
+      </div>
+
+      <p class="form-title">Send a message</p>
+      <form onsubmit="handleSubmit(event)">
+        <div class="form-group">
+          <label>Your Name</label>
+          <input type="text" placeholder="John Doe" required>
+        </div>
+        <div class="form-group">
+          <label>Email</label>
+          <input type="email" placeholder="john@company.com" required>
+        </div>
+        <div class="form-group">
+          <label>Service of Interest</label>
+          <select>
+            <option value="">Select a service...</option>
+            <option>Auditing & Assurance</option>
+            <option>Tax Advisory</option>
+            <option>Transfer Pricing</option>
+            <option>Management Consulting</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Message</label>
+          <textarea placeholder="Tell us about your needs..." required></textarea>
+        </div>
+        <button type="submit" class="submit-btn" id="submitBtn">Send Message</button>
+      </form>
+    </div>
+  </div>
+
+</main>
+
+<!-- BOTTOM NAV -->
+<nav class="bottom-nav">
+  <button class="nav-item active" onclick="showPage('home')" id="nav-home">
+    <span class="nav-icon">🏠</span>
+    <span class="nav-label">Home</span>
+    <span class="nav-dot"></span>
+  </button>
+  <button class="nav-item" onclick="showPage('about')" id="nav-about">
+    <span class="nav-icon">ℹ️</span>
+    <span class="nav-label">About</span>
+    <span class="nav-dot"></span>
+  </button>
+  <button class="nav-item" onclick="showPage('services')" id="nav-services">
+    <span class="nav-icon">💼</span>
+    <span class="nav-label">Services</span>
+    <span class="nav-dot"></span>
+  </button>
+  <button class="nav-item" onclick="showPage('offices')" id="nav-offices">
+    <span class="nav-icon">📍</span>
+    <span class="nav-label">Offices</span>
+    <span class="nav-dot"></span>
+  </button>
+  <button class="nav-item" onclick="showPage('news')" id="nav-news">
+    <span class="nav-icon">📰</span>
+    <span class="nav-label">News</span>
+    <span class="nav-dot"></span>
+  </button>
+  <button class="nav-item" onclick="showPage('contact')" id="nav-contact">
+    <span class="nav-icon">✉️</span>
+    <span class="nav-label">Contact</span>
+    <span class="nav-dot"></span>
+  </button>
+</nav>
+
+<!-- INSTALL BANNER -->
+<div class="install-banner" id="installBanner">
+  <p><strong>Install Funaro & Co.</strong><br><span>Add to your home screen for quick access — works offline too.</span></p>
+  <div class="install-actions">
+    <button class="install-btn" onclick="installApp()">Install App</button>
+    <button class="install-dismiss" onclick="dismissInstall()">Not Now</button>
+  </div>
+</div>
+
+<script>
+  // ── PAGE NAVIGATION ──
+  function showPage(name) {
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+    document.getElementById('page-' + name).classList.add('active');
+    document.getElementById('nav-' + name).classList.add('active');
+    window.scrollTo(0, 0);
+  }
+
+  // ── TAB SWITCHER (News page) ──
+  function switchTab(tab, btn) {
+    document.getElementById('tab-publications').style.display = tab === 'publications' ? 'block' : 'none';
+    document.getElementById('tab-alerts').style.display = tab === 'alerts' ? 'flex' : 'none';
+    if (tab === 'alerts') document.getElementById('tab-alerts').style.flexDirection = 'column';
+    document.querySelectorAll('.tab-btn').forEach(b => {
+      b.style.color = 'var(--muted)';
+      b.style.borderBottom = '2px solid transparent';
+      b.style.fontWeight = '500';
+    });
+    btn.style.color = 'var(--red)';
+    btn.style.borderBottom = '2px solid var(--red)';
+    btn.style.fontWeight = '600';
+  }
+
+  // ── FORM SUBMIT ──
+  function handleSubmit(e) {
+    e.preventDefault();
+    const btn = document.getElementById('submitBtn');
+    btn.textContent = '✓ Message Sent';
+    btn.style.background = '#1e7a3a';
+    setTimeout(() => {
+      btn.textContent = 'Send Message';
+      btn.style.background = '';
+      e.target.reset();
+    }, 3000);
+  }
+
+  // ── PWA INSTALL ──
+  let deferredPrompt;
+  window.addEventListener('beforeinstallprompt', (e) => {
+    e.preventDefault();
+    deferredPrompt = e;
+    setTimeout(() => {
+      document.getElementById('installBanner').classList.add('show');
+    }, 3000);
+  });
+
+  function installApp() {
+    if (deferredPrompt) {
+      deferredPrompt.prompt();
+      deferredPrompt.userChoice.then(() => { dismissInstall(); });
+    }
+  }
+  function dismissInstall() {
+    document.getElementById('installBanner').classList.remove('show');
+  }
+
+  // ── SERVICE WORKER ──
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+      navigator.serviceWorker.register('./sw.js').catch(() => {});
+    });
+  }
+</script>
+</body>
+</html>
